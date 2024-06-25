@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="main.js"></script>
+    <title>Ofogh collection</title>
+</head>
+<style>
+    :root {
+    --white:#e9e9e9;
+    --gray:#333;
+    --button-radius: 0.7rem;
+    --max-width: 758px;
+    --max-height: 420px;
+    font-size: 16px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+ul{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding: 10px;
+    position: fixed;
+    top: 10px;
+    right: 50px;
+}
+ul li {
+    list-style: none;
+}
+ul li a {
+    text-decoration: none;
+    color: #3d3d3d;
+    font-size: 22px;
+    display: block;
+    padding: 10px 15px;
+    position: relative;
+}
+ul li a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ffe5b4;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: all 0.5s;
+}
+ul li a:after {
+    content: '';
+    position: absolute;
+    bottom:0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color:  #ffe5b4;
+    transform: scaleX(0);
+    transition: all 0.5s;
+}
+ul li a:hover {
+    color:  #ffe5b4;
+}
+ul li a:hover::before, ul li a:hover:after {
+    transform: scaleX(1);
+}
+body {
+    align-items: center;
+    background-color: var(--white);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: grid;
+    height: 100vh;
+    place-items: center;
+    overflow: hidden;
+}
+.form-title {
+    font-weight: 300;
+    margin: 0;
+    margin-bottom: 1.25rem;
+}
+.link {
+    color: black;
+    font-size: 0.9rem;
+    margin: 1.5rem 0;
+    text-decoration: none;
+}
+.container {
+    background-color: gray;
+    border-radius: var(--button-radius);
+    box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25), 0 0.7rem rgba(0, 0, 0, 0.22);
+    height: var(--max-height);
+    max-width: var(--max-width);
+    overflow: hidden;
+    position: relative;
+    width: 1000px;
+    margin-top: -20%;
+}
+.container_form {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    transition: all 0.6s ease-in-out;
+}
+.container--signin {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+ 
+}
+.container.right-panel-active .container--signin {
+    transform: translateX(100%);
+    animation: show 0.6s;
+    opacity: 1;
+    z-index: 2;
+}
+.container--signup {
+    left: 0;
+    opacity: 0;
+    width: 50%;
+    z-index: 1;
+
+}
+.container.right-panel-active .container--signup {
+    animation: show 0.5s;
+    opacity: 1;
+    transform: translateX(100%);
+    z-index: 5;
+}
+.container_overlay {
+    height: 100%;
+    left: 50%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    transition: transform 0.6s ease-in-out;
+    width: 50%;
+    z-index: 100;
+}
+.container.right-panel-active .container_overlay {
+    transform: translateX(-100%);
+}
+.overlay {
+    background-color: rgba(211, 211, 211, 0.452);
+    background-image: url(data:image/jpeg;base64,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);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    left: -100%;
+    position: relative;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+    width: 539%;
+}
+.container.right-panel-active .overlay {
+    transform: rotateX(50%);
+}
+.overlay_panel {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    transform: rotateX(0);
+    transition: transform 0.6s ease-in-out;
+    width: 50%;
+}
+.overlay--left {
+    transform: translateX(-20%);
+}
+.container.right-panel-active .overlay--left {
+    transform: translateX(0);
+}
+.overlay--right {
+    right: 0;
+    transform: translateX(0);
+}
+.container.right-panel-active .overlay--right {
+    transform: translateX(20%);
+}
+.btn {
+    background-color: rgba(128, 128, 128, 0);
+    background-image: linear-gradient(90deg, gray  0%, gray 74%);
+    border-radius: 22px;
+    color: 1px solid  gray;
+    color: lightgray;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    padding: 0.9rem 4rem;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    width: 140px;
+    height: 50px;
+}
+.form > .btn {
+    margin-top: 1.5rem;
+}
+.btn:active {
+    transform: scale(0.95);
+}
+.btn:focus {
+    outline: none;
+}
+.form {
+    background-color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0.3rem;
+    height: 100%;
+    text-align: center;
+}
+.input {
+    background-color: #fff;
+    border: none;
+    padding: 0.9rem 0.9rem;
+    margin: 0.5rem 0;
+    width: 90%;
+    height: 30px;
+}
+@keyframes show {
+    0%,
+    49.99% {
+        opacity: 0;
+        z-index: 1;
+    }
+    50%,
+    100% {
+        opacity: 1;
+        z-index: 5;
+    }
+}
+</style>
+<body>
+<header> 
+    <div class="navigation">
+     <ul> 
+        <li><a href="./home.html">home</a></li>
+        <li><a href="./about.html">about</a></li> 
+        <li><a href="./products.html">products</a></li>
+        <li><a href="./sign in.html">sign in</a></li> 
+     </ul>
+    </div>
+</header>
+   <div class="container right-panel-active">
+    <div class="container_form container--signup">
+        <form method="get" class="form" id="form1">
+            <h2 class="form-title">sign up</h2>
+            <input type="text" placeholder="User" class="input" />
+            <input type="email" placeholder="Email" class="input" />
+            <input type="password" placeholder="password" class="input" />
+            <button class="btn">sign Up</button> 
+            
+        </form>
+   </div>
+
+   <div class="container_form container--signin">
+    <form method="get" class="form" id="form2">
+        <h2 class="form-title">sign In</h2>
+        <input type="email" placeholder="Email" class="input" />
+        <input type="password" placeholder="Password" class="input" />
+        <input id="reminder" type="checkbox" name="add-choice" value="remember me"/>
+        <label class="inline-label" for="signIn">remember my password</label>
+        <a href="#" class="link">forget your password?</a>
+        <button class="btn">sign in</button>
+    </form>
+   </div>
+
+   <div class="container_overlay">
+    <div class="overlay">
+        <div class="overlay_panel overlay--left">
+            <button class="btn" id="signIn">sign In</button> 
+
+   <div class="overlay_panel overlay--right">
+    <button class="btn" id="signUp">sign Up</button>
+   </div>
+   </div>
+</body>
+</html>
